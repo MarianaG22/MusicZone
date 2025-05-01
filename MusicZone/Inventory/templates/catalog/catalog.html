@@ -1,0 +1,34 @@
+
+{% block content %}
+
+<h2>Catálogo</h2>
+
+<!-- Mostrar instrumentos en tarjetas -->
+<div class="row">
+    {% for instruments in instrument_list %}
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ instruments.name }}</h5>
+                <p class="card-text">
+                    {{ instruments.instrument }}
+                </p>
+                <p class="card-text">
+                    <span class="fw-bold">Tipo:</span> {{ instruments.type}}
+                </p>
+                <p class="card-text">
+                    <span class="fw-bold">Marca:</span> {{ instruments.mark}}
+                </p>
+                <p class="card-text">
+                    <span class="fw-bold">Precio:</span> ${{ instruments.price}}
+                </p>
+                <a href="#" class="btn">Agregar al Carrito</a>
+            </div>
+        </div>
+    </div> 
+    {% empty %}
+        <p class="text-center">No hay instrumentos disponibles.</p>
+    {% endfor %}
+
+ </div>
+ {% endblock %}
