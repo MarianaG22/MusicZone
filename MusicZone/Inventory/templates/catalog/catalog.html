@@ -1,4 +1,3 @@
-
 {% block content %}
 
 <h2>Catálogo</h2>
@@ -25,10 +24,37 @@
                 <a href="#" class="btn">Agregar al Carrito</a>
             </div>
         </div>
-    </div> 
+    </div>
     {% empty %}
-        <p class="text-center">No hay instrumentos disponibles.</p>
+    <p class="text-center">No hay instrumentos disponibles.</p>
     {% endfor %}
 
- </div>
- {% endblock %}
+    <!-- Paginación -->
+    {% if instrument_list.paginator.num_pages > 1 %}
+    <nav>
+        <ul class="pagination justify-content-center mt-4">
+            {% if instrument_list.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ instrument_list.previous_page_number }}" aria-label="Anterior">
+                    Anterior
+                </a>
+            </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">Página {{ instrument_list.number }} de {{ instrument_list.paginator.num_pages
+                    }}</span>
+            </li>
+
+            {% if instrument_list.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ instrument_list.next_page_number }}" aria-label="Siguiente">
+                    Siguiente
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}
