@@ -1,25 +1,78 @@
+{% load humanize %}
+{% load static %}
+
 {% block content %}
 
 <h2>Catálogo</h2>
 
+<!-- Formulario de filtros -->
+<form method="get" class="mb-4">
+    <div class="row g-3">
+        <!-- Filtro por tipo -->
+        <div class="col-md-3">
+            <label for="type">Tipo:</label>
+            <select name="type" id="type" class="form-select">
+                <option value="">Todos los tipos</option>
+                {% for t in types %}
+                <option value="{{ t.id }}" {% if t.id == selected_type %}selected{% endif %}>
+                    {{ t.type }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Filtro por marca -->
+        <div class="col-md-3">
+            <label for="mark">Marca:</label>
+            <select name="mark" id="mark" class="form-select">
+                <option value="">Todas las marcas</option>
+                {% for m in marks %}
+                <option value="{{ m.id }}" {% if m.id == selected_mark %}selected{% endif %}>
+                    {{ m.mark }}
+                </option>
+
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Precio mínimo -->
+        <div class="col-md-2">
+            <label for="price_min">Precio mínimo:</label>
+            <input type="text" id="minPrice" name="min_price" class="form-control" placeholder="Precio mínimo">
+        </div>
+
+        <!-- Precio máximo -->
+        <div class="col-md-2">
+            <label for="price_max">Precio máximo:</label>
+            <input type="text" id="maxPrice" name="max_price" class="form-control" placeholder="Precio máximo">
+        </div>
+
+        <!-- Botón -->
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+        </div>
+    </div>
+</form>
+
+
 <!-- Mostrar instrumentos en tarjetas -->
 <div class="row">
-    {% for instruments in instrument_list %}
+    {% for instrument in instrument_list %}
     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{{ instruments.name }}</h5>
+                <h5 class="card-title">{{ instrument.name }}</h5>
                 <p class="card-text">
                     {{ instruments.instrument }}
                 </p>
                 <p class="card-text">
-                    <span class="fw-bold">Tipo:</span> {{ instruments.type}}
+                    <span class="fw-bold">Tipo:</span> {{ instrument.type}}
                 </p>
                 <p class="card-text">
-                    <span class="fw-bold">Marca:</span> {{ instruments.mark}}
+                    <span class="fw-bold">Marca:</span> {{ instrument.mark}}
                 </p>
                 <p class="card-text">
-                    <span class="fw-bold">Precio:</span> ${{ instruments.price}}
+                    <span class="fw-bold">Precio:</span> ${{ instrument.price|floatformat:0|intcomma }}
                 </p>
                 <a href="#" class="btn">Agregar al Carrito</a>
             </div>
@@ -35,21 +88,23 @@
         <ul class="pagination justify-content-center mt-4">
             {% if instrument_list.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ instrument_list.previous_page_number }}" aria-label="Anterior">
+                <a class="page-link"
+                    href="?page={{ instrument_list.previous_page_number }}{% if selected_type %}&type={{ selected_type }}{% endif %}{% if selected_mark %}&mark={{ selected_mark }}{% endif %}{% if price_min %}&price_min={{ price_min }}{% endif %}{% if price_max %}&price_max={{ price_max }}{% endif %}">
                     Anterior
                 </a>
             </li>
             {% endif %}
 
             <li class="page-item disabled">
-                <span class="page-link">Página {{ instrument_list.number }} de {{ instrument_list.paginator.num_pages
-                    }}</span>
+                <span class="page-link">Página {{ instrument_list.number }} de {{ instrument_list.paginator.num_pages }}</span>
             </li>
 
             {% if instrument_list.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ instrument_list.next_page_number }}" aria-label="Siguiente">
+                <a class="page-link"
+                    href="?page={{ instrument_list.next_page_number }}{% if selected_type %}&type={{ selected_type }}{% endif %}{% if selected_mark %}&mark={{ selected_mark }}{% endif %}{% if price_min %}&price_min={{ price_min }}{% endif %}{% if price_max %}&price_max={{ price_max }}{% endif %}">
                     Siguiente
+                </a>
                 </a>
             </li>
             {% endif %}
@@ -57,4 +112,7 @@
     </nav>
     {% endif %}
 </div>
+
+<!--Link del js-->
+<script src="{% static 'js/precio.js' %}"></script>
 {% endblock %}
