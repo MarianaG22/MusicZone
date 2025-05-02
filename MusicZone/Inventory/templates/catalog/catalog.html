@@ -54,17 +54,13 @@
     </div>
 </form>
 
-
 <!-- Mostrar instrumentos en tarjetas -->
 <div class="row">
     {% for instrument in instrument_list %}
     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{{ instrument.name }}</h5>
-                <p class="card-text">
-                    {{ instruments.instrument }}
-                </p>
+                <h3 class="card-title">{{ instrument.instrument }}</h5>
                 <p class="card-text">
                     <span class="fw-bold">Tipo:</span> {{ instrument.type}}
                 </p>
@@ -74,7 +70,7 @@
                 <p class="card-text">
                     <span class="fw-bold">Precio:</span> ${{ instrument.price|floatformat:0|intcomma }}
                 </p>
-                <a href="#" class="btn">Agregar al Carrito</a>
+                <a href="{% url 'add_to_cart' instrument.id %}" class="btn">Agregar al Carrito</a>
             </div>
         </div>
     </div>
@@ -114,5 +110,5 @@
 </div>
 
 <!--Link del js-->
-<script src="{% static 'js/precio.js' %}"></script>
+<script src="{% static 'js/price.js' %}"></script>
 {% endblock %}

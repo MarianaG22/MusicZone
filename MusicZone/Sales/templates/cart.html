@@ -1,0 +1,62 @@
+{% block content %}
+<div>
+    <h2 class="text-center fw-bold mt-2 mb-4">Carrito de Compras</h2>
+        <hr class="border-1 opacity-75 mt-1">
+
+        {% if items %}
+        <div class="table-responsive">
+            <table class="table table-borderless table-hover rounded-3 overflow-hidden">
+                <thead class="text-white">
+                    <tr>
+                        <th class="text-center">Instrumento</th>
+                        <th class="text-center">Precio</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Subtotal</th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td class="align-middle text-center">{{ item.instrument }}</td>
+                        <td class="align-middle text-center">${{ item.instrument.price }}</td>
+                        <td class="align-middle text-center">
+                            <div class="d-flex justify-content-center">
+                                <a href="{% url 'decrease_quantity' item.id %}" class="btn btn-sm">-</a>
+                                <span class="mx-2">{{ item.quantity }}</span>
+                                <a href="{% url 'increase_quantity' item.id %}" class="btn btn-sm btn-success">+</a>
+                            </div>
+                        </td>
+                        <td class="align-middle text-center">${{ item.subtotal }}</td>
+                        <td class="align-middle text-center">
+                            <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm fw-bold shadow-sm">
+                                Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <hr class="border-1 opacity-75 mt-1">
+
+        <div class="d-flex justify-content-end mt-3">
+            <h5><strong>Total: $<span id="cart-total">{{ total_price }}</span></strong></h5>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-between">
+            <a href="{% url 'catalog' %}" class="btn shadow">Ir al Catálogo</a>
+            {% if cart %}
+            <form id="saleForm" action="#" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn">Realizar pedido</button>
+            </form>
+            {% endif %}
+        </div>
+        
+        {% else %}
+        <p class="text-center">Tu carrito está vacío.</p>
+        {% endif %}
+</div>
+
+{% endblock %}
