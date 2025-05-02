@@ -34,10 +34,11 @@ class Cart(models.Model):
 
     def __str__(self):
         return f"Cart #{self.id} - {self.user.username}"
-
+    
 class Cart_Item(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, verbose_name="Carrito")
     instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE, verbose_name="Instrumento")
+    quantity = models.PositiveIntegerField(default=1, verbose_name="Quantity")
     added_at = models.DateField(verbose_name="Fecha de Adición")
 
     def __str__(self):

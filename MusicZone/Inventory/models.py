@@ -27,6 +27,7 @@ class Instrument(models.Model):
     mark = models.ForeignKey(Mark, on_delete=models.CASCADE, verbose_name="Marca")
     price = models.IntegerField(verbose_name="Precio")
     stock = models.IntegerField(verbose_name="Stock")
+    image = models.ImageField(upload_to="galery/", null=False, blank=False, default=None)
 
     def __str__(self):
         return self.instrument
