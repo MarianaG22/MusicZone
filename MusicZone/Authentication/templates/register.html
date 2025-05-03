@@ -1,0 +1,11 @@
+<form action="{% url 'register' %}" method="POST">
+    {% csrf_token %}
+    <h1>Registrate</h1>
+    <!-- Campos del formulario -->
+    <input type="text" placeholder="Nombre" id="name" name="name" required>
+    <input type="text" placeholder="Apellido" id="last_name" name="last_name" required>
+    <input type="text" placeholder="Nombre de usuario" id="username" name="username" required>
+    <input type="email" placeholder="Correo" id="email" name="email" required>
+    <input type="password" placeholder="Contraseña" id="password" name="password" required>
+    <button type="submit">Registrarse</button>
+</form>
