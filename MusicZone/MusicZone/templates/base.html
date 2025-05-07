@@ -41,7 +41,7 @@
                     <a class="nav-link text-white" href="{% url 'home' %}"><ion-icon name="home-outline"></ion-icon> Home</a>
                 </li>
                 <li class="nav-item me-3">
-                    <a class="nav-link text-white" href="#"><ion-icon name="cart-outline"></ion-icon> Carrito de Compras</a>
+                    <a class="nav-link text-white" href="{% url 'sales:cart_view' %}"><ion-icon name="cart-outline"></ion-icon> Carrito de Compras</a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item me-3">

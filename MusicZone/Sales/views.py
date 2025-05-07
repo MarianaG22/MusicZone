@@ -41,7 +41,7 @@ def increase_quantity(request, item_id):
         item.quantity += 1
         item.save()
 
-    return redirect('cart_view')
+    return redirect('sales:cart_view')
 
 # Disminuir la cantidad de un producto en el carrito
 #@login_required
@@ -54,7 +54,7 @@ def decrease_quantity(request, item_id):
         else:
             item.delete()  # Elimina el item si la cantidad es 0
 
-    return redirect('cart_view')
+    return redirect('sales:cart_view')
 
 # Eliminar un producto del carrito
 #@login_required
@@ -63,4 +63,4 @@ def remove_from_cart(request, item_id):
     if item.cart.user == request.user:
         item.delete()
 
-    return redirect('cart_view')
+    return redirect('sales:cart_view')

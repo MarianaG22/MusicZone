@@ -1,114 +1,102 @@
-{% load humanize %}
+{% extends 'base.html' %}
+
+{% block title %}Catálogo{% endblock %}
+
 {% load static %}
 
+{% load humanize %}
+
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<h2>Catálogo</h2>
+<div class="container-fluid d-flex justify-content-center align-items-center min-vh-100 px-3">
+    <div class="card shadow-lg rounded-4 p-4 m-4 col-lg-11 col-md-10 col-sm-12" style="background-color: white;">
+        <h2 class="text-center fw-bold mt-2 mb-4" style="color: #ff9f00;">Catálogo de Instrumentos</h2>
+        <hr class="border-1 opacity-75 mt-1" style="border-color: #f54848;">
 
-<!-- Formulario de filtros -->
-<form method="get" class="mb-4">
-    <div class="row g-3">
         <!-- Filtro por tipo -->
-        <div class="col-md-3">
-            <label for="type">Tipo:</label>
-            <select name="type" id="type" class="form-select">
-                <option value="">Todos los tipos</option>
-                {% for t in types %}
-                <option value="{{ t.id }}" {% if t.id == selected_type %}selected{% endif %}>
-                    {{ t.type }}
-                </option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <!-- Filtro por marca -->
-        <div class="col-md-3">
-            <label for="mark">Marca:</label>
-            <select name="mark" id="mark" class="form-select">
-                <option value="">Todas las marcas</option>
-                {% for m in marks %}
-                <option value="{{ m.id }}" {% if m.id == selected_mark %}selected{% endif %}>
-                    {{ m.mark }}
-                </option>
-
-                {% endfor %}
-            </select>
-        </div>
-
-        <!-- Precio mínimo -->
-        <div class="col-md-2">
-            <label for="price_min">Precio mínimo:</label>
-            <input type="text" id="minPrice" name="min_price" class="form-control" placeholder="Precio mínimo">
-        </div>
-
-        <!-- Precio máximo -->
-        <div class="col-md-2">
-            <label for="price_max">Precio máximo:</label>
-            <input type="text" id="maxPrice" name="max_price" class="form-control" placeholder="Precio máximo">
-        </div>
-
-        <!-- Botón -->
-        <div class="col-md-2 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
-        </div>
-    </div>
-</form>
-
-<!-- Mostrar instrumentos en tarjetas -->
-<div class="row">
-    {% for instrument in instrument_list %}
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">{{ instrument.instrument }}</h5>
-                <p class="card-text">
-                    <span class="fw-bold">Tipo:</span> {{ instrument.type}}
-                </p>
-                <p class="card-text">
-                    <span class="fw-bold">Marca:</span> {{ instrument.mark}}
-                </p>
-                <p class="card-text">
-                    <span class="fw-bold">Precio:</span> ${{ instrument.price|floatformat:0|intcomma }}
-                </p>
-                <a href="{% url 'add_to_cart' instrument.id %}" class="btn">Agregar al Carrito</a>
+        <form method="get" class="row g-3 mb-4">
+            <div class="col-md-3">
+                <label for="type" class="form-label">Tipo:</label>
+                <select name="type" id="type" class="form-select border-warning">
+                    <option value="">Todos los tipos</option>
+                    {% for t in types %}
+                    <option value="{{ t.id }}" {% if t.id == selected_type %}selected{% endif %}>{{ t.type }}</option>
+                    {% endfor %}
+                </select>
             </div>
+            <!-- Filtro por marca -->
+            <div class="col-md-3">
+                <label for="mark" class="form-label">Marca:</label>
+                <select name="mark" id="mark" class="form-select border-warning">
+                    <option value="">Todas las marcas</option>
+                    {% for m in marks %}
+                    <option value="{{ m.id }}" {% if m.id == selected_mark %}selected{% endif %}>{{ m.mark }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Precio minimo -->
+            <div class="col-md-2">
+                <label for="price_min" class="form-label">Precio mínimo:</label>
+                <input type="text" id="minPrice" name="min_price" class="form-control border-danger" placeholder="Precio mínimo">
+            </div>
+            <!-- Precio maximo -->
+            <div class="col-md-2">
+                <label for="price_max" class="form-label">Precio máximo:</label>
+                <input type="text" id="maxPrice" name="max_price" class="form-control border-danger" placeholder="Precio máximo">
+            </div>
+            <!-- Boton -->
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn w-100" style="background-color:#f54848; color:white;">Filtrar</button>
+            </div>
+        </form>
+
+        <!-- Tarjetas de instrumentos -->
+        <div class="row">
+            {% for instrument in instrument_list %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card" style="background-color: #fff8f1;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ instrument.instrument }}</h5>
+                        <p class="card-text"><strong style="color:#ff9f00;">Tipo:</strong> {{ instrument.type }}</p>
+                        <p class="card-text"><strong style="color:#ff9f00;">Marca:</strong> {{ instrument.mark }}</p>
+                        <p class="card-text"><strong style="color:#ff9f00;">Precio:</strong> ${{ instrument.price|floatformat:0|intcomma }}</p>
+                        <a href="{% url 'sales:add_to_cart' instrument.id %}" class="btn w-100 mt-2" style="background-color: #f54848; color: white;">Agregar al Carrito</a> 
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">No hay instrumentos disponibles.</p>
+            {% endfor %}
         </div>
+
+        <!-- Paginación -->
+        {% if instrument_list.paginator.num_pages > 1 %}
+        <nav>
+            <ul class="pagination justify-content-center mt-4">
+                {% if instrument_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ instrument_list.previous_page_number }}{% if selected_type %}&type={{ selected_type }}{% endif %}{% if selected_mark %}&mark={{ selected_mark }}{% endif %}{% if price_min %}&price_min={{ price_min }}{% endif %}{% if price_max %}&price_max={{ price_max }}{% endif %}" style="background-color:#ff9f00; color:white;">
+                        Anterior
+                    </a>
+                </li>
+                {% endif %}
+                <li class="page-item disabled">
+                    <span class="page-link">Página {{ instrument_list.number }} de {{ instrument_list.paginator.num_pages }}</span>
+                </li>
+                {% if instrument_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ instrument_list.next_page_number }}{% if selected_type %}&type={{ selected_type }}{% endif %}{% if selected_mark %}&mark={{ selected_mark }}{% endif %}{% if price_min %}&price_min={{ price_min }}{% endif %}{% if price_max %}&price_max={{ price_max }}{% endif %}" style="background-color:#ff9f00; color:white;">
+                        Siguiente
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
     </div>
-    {% empty %}
-    <p class="text-center">No hay instrumentos disponibles.</p>
-    {% endfor %}
-
-    <!-- Paginación -->
-    {% if instrument_list.paginator.num_pages > 1 %}
-    <nav>
-        <ul class="pagination justify-content-center mt-4">
-            {% if instrument_list.has_previous %}
-            <li class="page-item">
-                <a class="page-link"
-                    href="?page={{ instrument_list.previous_page_number }}{% if selected_type %}&type={{ selected_type }}{% endif %}{% if selected_mark %}&mark={{ selected_mark }}{% endif %}{% if price_min %}&price_min={{ price_min }}{% endif %}{% if price_max %}&price_max={{ price_max }}{% endif %}">
-                    Anterior
-                </a>
-            </li>
-            {% endif %}
-
-            <li class="page-item disabled">
-                <span class="page-link">Página {{ instrument_list.number }} de {{ instrument_list.paginator.num_pages }}</span>
-            </li>
-
-            {% if instrument_list.has_next %}
-            <li class="page-item">
-                <a class="page-link"
-                    href="?page={{ instrument_list.next_page_number }}{% if selected_type %}&type={{ selected_type }}{% endif %}{% if selected_mark %}&mark={{ selected_mark }}{% endif %}{% if price_min %}&price_min={{ price_min }}{% endif %}{% if price_max %}&price_max={{ price_max }}{% endif %}">
-                    Siguiente
-                </a>
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
 </div>
 
-<!--Link del js-->
 <script src="{% static 'js/price.js' %}"></script>
 {% endblock %}

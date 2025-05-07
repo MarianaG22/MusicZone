@@ -22,14 +22,14 @@
                         <td class="align-middle text-center">${{ item.instrument.price }}</td>
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center">
-                                <a href="{% url 'decrease_quantity' item.id %}" class="btn btn-sm">-</a>
+                                <a href="{% url 'sales:decrease_quantity' item.id %}" class="btn btn-sm">-</a>
                                 <span class="mx-2">{{ item.quantity }}</span>
-                                <a href="{% url 'increase_quantity' item.id %}" class="btn btn-sm btn-success">+</a>
+                                <a href="{% url 'sales:increase_quantity' item.id %}" class="btn btn-sm btn-success">+</a>
                             </div>
                         </td>
                         <td class="align-middle text-center">${{ item.subtotal }}</td>
                         <td class="align-middle text-center">
-                            <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm fw-bold shadow-sm">
+                            <a href="{% url 'sales:remove_from_cart' item.id %}" class="btn btn-danger btn-sm fw-bold shadow-sm">
                                 Eliminar
                             </a>
                         </td>
