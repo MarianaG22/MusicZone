@@ -18,7 +18,7 @@ class Sale_Detail(models.Model):
     price = models.IntegerField(verbose_name="Precio")
 
     def __str__(self):
-        return f"SaleDetail #{self.id} - Sale #{self.sale.id} - {self.instrument.name}"
+        return f"SaleDetail #{self.id} - Sale #{self.sale.id} - {self.instrument.instrument}"
 
 class Order(models.Model):
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE, verbose_name="Venta")

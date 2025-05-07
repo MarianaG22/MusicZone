@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Cart, Cart_Item
+from .models import Cart, Cart_Item, Sale, Sale_Detail
 from Inventory.models import Instrument
+from Users.models import User
+from django.utils.timezone import now
+from django.http import JsonResponse
+from django.contrib import messages
 from datetime import date
 
 #@login_required
@@ -64,3 +68,50 @@ def remove_from_cart(request, item_id):
         item.delete()
 
     return redirect('cart_view')
+
+# Realizar pedido
+@login_required
+def register_sale(request):
+    if request.method == "POST":
+        cart = Cart.objects.filter(user=request.user).first()  
+        if not cart or not Cart_Item.objects.filter(cart=cart).exists():
+            return JsonResponse({"success": False, "message": "El carrito está vacío."})
+
+        user = request.user  
+        items = Cart_Item.objects.filter(cart=cart)
+        total_price = sum(item.instrument.price * item.quantity for item in items)
+
+        # Registrar la venta
+        sale = Sale.objects.create(user=user, total_price=total_price, date=now())
+
+        for item in items:
+            instrument = item.instrument
+            # Mensaje de stock bajo 
+            if instrument.stock < item.quantity:
+                if user.is_staff:
+                    mensaje = f"No hay suficiente stock de {instrument.instrument}."
+                else:
+                    mensaje = f"Lo sentimos, el instrumento {instrument.instrument} no está disponible en este momento."
+                return JsonResponse({"success": False, "message": mensaje})
+            # Datos
+            Sale_Detail.objects.create(
+                sale=sale,
+                instrument=instrument,
+                quantity=item.quantity,
+                price=instrument.price
+            )
+            # Reducir el stock
+            instrument.stock -= item.quantity
+            instrument.save()
+
+        # Vaciar carrito después de la compra
+        items.delete()
+
+        # Notificar al administrador
+        admin_user = User.objects.filter(is_superuser=True).first()
+        if admin_user:
+            messages.success(request, f"Nuevo pedido realizado por {user.username}. Total: ${total_price}")
+
+        return JsonResponse({"success": True, "message": "¡Pedido realizado exitosamente!"})
+    
+    return JsonResponse({"success": False, "message": "Método no permitido."})
