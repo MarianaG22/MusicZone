@@ -93,7 +93,7 @@
         </div>
 
         <!-- Offcanvas para móviles -->
-        <div class="offcanvas offcanvas-start text-bg-dark" id="sidebarMenu">
+        <div class="offcanvas offcanvas-start text-white" id="sidebarMenu" style="background-color: #ff9f00; width: 250px;">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title">Menú</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
@@ -118,7 +118,7 @@
                         <a href="{% url 'sales:order_list' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Ordenes</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="#" class="btn w-100" style="background-color: #ffaa21; color: white;">Usuarios</a>
+                        <a href="{% url 'users:user' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Usuarios</a>
                     </li>
                     {% endif %}
                 </ul>

@@ -2,72 +2,73 @@
 
 {% block title %}Inventario{% endblock %}
 
-<!--Carga instruccion bloque js-->
 {% load static %}
 
 {% block content %}
 <!-- Bootstrap JS (necesario para dropdowns) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<div class="container-fluid d-flex justify-content-center align-items-center min-vh-100 px-3">
-    <div class="card shadow-lg bg-white rounded-4 p-4 m-4 col-lg-11 col-md-10 col-sm-12"
-        style="background-color:white;">
-        <h2 class="text-center fw-bold mt-2 mb-4" style="color: #ffaa21;">Gestión de Inventario</h2>
+<div class="container py-4">
+        <div class="card shadow-lg bg-white rounded-4 p-4 m-4 col-lg-11 col-md-10"
+            style="background-color:white;">
+            <h2 class="text-center fw-bold mt-2 mb-4" style="color: #ffaa21;">Gestión de Inventario</h2>
 
-        <!-- Notificaciones -->
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-        {% endif %}
+            <!-- Notificaciones -->
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
 
-        <!-- Filtros -->
-        <div class="row mb-3 align-items-center">
-            <div class="d-flex justify-content-between align-items-center me-2 mt-2">
-                <div class="col-md-2 text-start">
-                    <a href="{% url 'products:crear_instrumento' %}" class="btn shadow align-items-center justify-content-center"
-                        style="background-color: rgb(240, 84, 84); color: white;">Agregar</a>
+            <!-- Filtros -->
+            <div class="row mb-3 align-items-center">
+                <div class="d-flex justify-content-between align-items-center me-2 mt-2">
+                    <div class="col-md-2 text-start">
+                        <a href="{% url 'products:crear_instrumento' %}"
+                            class="btn shadow align-items-center justify-content-center"
+                            style="background-color: rgb(240, 84, 84); color: white;">Agregar</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <hr class="border-1 opacity-75 mt-1 mb-3" style="color: rgb(230, 120, 120);">
+            <hr class="border-1 opacity-75 mt-1 mb-3" style="color: rgb(230, 120, 120);">
 
-        <!-- Tabla de Instrumentos -->
-        <div class="table-responsive">
-            <table class="table table-hover rounded-3 overflow-hidden">
-                <thead class="text-white" >
-                    <tr>
-                        <th>Id</th>
-                        <th>Tipo</th>
-                        <th>Marca</th>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Stock</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for instrument in instruments %}
-                    <tr>
-                        <td>{{ instrument.id }}</td>
-                        <td>{{ instrument.type.type }}</td>
-                        <td>{{ instrument.mark.mark }}</td>
-                        <td>{{ instrument.instrument }}</td>
-                        <td>${{ instrument.price }}</td>
-                        <td>{{ instrument.stock }}</td>
-                        <td>
-                            <a href="{% url 'products:editar_instrumento' instrument.id %}" class="btn btn-sm"
-                                style="background-color: #ffaa21; color: white;">Editar</a>
-                            <a href="{% url 'products:eliminar_instrumento' instrument.id %}" class="btn btn-sm"
-                                style="background-color: rgb(240, 84, 84); color: white;">Eliminar</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <!-- Tabla de Instrumentos -->
+            <div class="table-responsive">
+                <table class="table table-hover rounded-3 overflow-hidden">
+                    <thead class="text-white">
+                        <tr>
+                            <th>Id</th>
+                            <th>Tipo</th>
+                            <th>Marca</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for instrument in instruments %}
+                        <tr>
+                            <td>{{ instrument.id }}</td>
+                            <td>{{ instrument.type.type }}</td>
+                            <td>{{ instrument.mark.mark }}</td>
+                            <td>{{ instrument.instrument }}</td>
+                            <td>${{ instrument.price }}</td>
+                            <td>{{ instrument.stock }}</td>
+                            <td>
+                                <a href="{% url 'products:editar_instrumento' instrument.id %}" class="btn btn-sm"
+                                    style="background-color: #ffaa21; color: white;">Editar</a>
+                                <a href="{% url 'products:eliminar_instrumento' instrument.id %}" class="btn btn-sm"
+                                    style="background-color: rgb(240, 84, 84); color: white;">Eliminar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
