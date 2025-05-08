@@ -136,5 +136,5 @@ def toggle_order_status(request, order_id):
             order.save()
             if request.headers.get('x-requested-with') == 'XMLHttpRequest':
                 return JsonResponse({'success': True, 'new_status': order.get_status_display()})
-            return redirect('order_list')
+            return redirect('sales:order_list')
     return JsonResponse({'success': False, 'error': 'No autorizado'}, status=403)

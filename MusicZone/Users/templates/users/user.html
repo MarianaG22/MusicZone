@@ -15,7 +15,7 @@
             <a href="{% url 'users:add_user' %}" class="btn shadow"
                 style="background-color: rgb(245, 72, 72); color: white;">Agregar</a>
         </div>
-        <hr class="border-1 opacity-75 mt-1">
+        <hr class="border-1 opacity-75 mt-1" style="color: rgb(230, 120, 120);">
 
         <div class="table-responsive">
             <table id="usersTable" class="table table-bordered table-hover align-middle">
@@ -41,7 +41,7 @@
                         <td>{{ usuario.role.role }}</td>
                         <td class="text-center">
                             <a href="{% url 'users:edit_user' usuario_id=usuario.id %}" class="btn btn-sm me-1"
-                                style="background-color: rgb(245, 72, 72); color: white;">Editar</a>
+                                style="background-color: #ffaa21; color: white;">Editar</a>
                             <!-- Formulario para eliminar -->
                             <form action="{% url 'users:remove_user' usuario_id=usuario.id %}" method="POST"
                                 style="display:inline;">

@@ -33,12 +33,12 @@
                 </div>
             </div>
         </div>
-        <hr class="border-1 opacity-75 mt-1 mb-3">
+        <hr class="border-1 opacity-75 mt-1 mb-3" style="color: rgb(230, 120, 120);">
 
         <!-- Tabla de Instrumentos -->
         <div class="table-responsive">
             <table class="table table-hover rounded-3 overflow-hidden">
-                <thead class="text-white" style="background-color: #ffaa21;">
+                <thead class="text-white" >
                     <tr>
                         <th>Id</th>
                         <th>Tipo</th>
@@ -60,7 +60,7 @@
                         <td>{{ instrument.stock }}</td>
                         <td>
                             <a href="{% url 'products:editar_instrumento' instrument.id %}" class="btn btn-sm"
-                                style="background-color: rgb(240, 84, 84); color: white;">Editar</a>
+                                style="background-color: #ffaa21; color: white;">Editar</a>
                             <a href="{% url 'products:eliminar_instrumento' instrument.id %}" class="btn btn-sm"
                                 style="background-color: rgb(240, 84, 84); color: white;">Eliminar</a>
                         </td>
