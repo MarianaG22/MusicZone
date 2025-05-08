@@ -21,12 +21,17 @@ class Sale_Detail(models.Model):
         return f"SaleDetail #{self.id} - Sale #{self.sale.id} - {self.instrument.instrument}"
 
 class Order(models.Model):
+    class Status(models.TextChoices):
+        PENDIENTE = 'pendiente', 'Pendiente'
+        ENVIADA = 'enviada', 'Enviada'
+        ENTREGADA = 'entregada', 'Entregada'
+
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE, verbose_name="Venta")
-    status = models.BooleanField(default=False, verbose_name="Estado")
+    status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDIENTE, verbose_name="Estado")
     order_date = models.DateField(verbose_name="Fecha de Pedido")
 
     def __str__(self):
-        return f"Order #{self.id} - Sale #{self.sale.id} - {'Completed' if self.status else 'Pending'}"
+        return f"Order #{self.id} - Sale #{self.sale.id} - {self.get_status_display()}"
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuario")
