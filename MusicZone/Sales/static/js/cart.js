@@ -18,7 +18,7 @@ document.getElementById("saleForm").addEventListener("submit", function(event) {
                 title: "¡Todo listo!",
                 text: data.message,
                 icon: "success",
-                confirmButtonColor: "#6b8e23",
+                confirmButtonColor: "#ffc400",
                 confirmButtonText: "OK"
             }).then(() => {
                 window.location.href = cartViewUrl;

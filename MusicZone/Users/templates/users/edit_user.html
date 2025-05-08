@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Editar Usuario{% endblock %}
+
+{% block content %}
+<div class="container-fluid d-flex justify-content-center align-items-center min-vh-100 px-3">
+    <div class="card shadow-lg bg-white rounded-4 p-5 m-4 col-lg-6 col-md-8 col-sm-12">
+        <h2 class="text-center fw-bold mt-2 mb-4" style="color: #ff9f00;">Editar Usuario</h2>
+        <hr class="border-1 opacity-75 mt-1">
+
+        <form method="post" class="row g-3">
+            {% csrf_token %}
+
+            <div class="col-12">
+                <label for="username" class="form-label">Nombre de usuario:</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ usuario.username }}" required>
+            </div>
+
+            <div class="col-12">
+                <label for="email" class="form-label">Correo:</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ usuario.email }}" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="name" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ usuario.name }}" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="last_name" class="form-label">Apellido:</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ usuario.last_name }}" required>
+            </div>
+
+            <div class="col-12">
+                <label for="role" class="form-label">Rol:</label>
+                <select class="form-select" id="role" name="role" required>
+                    <option value="">Selecciona un rol</option>
+                    {% for role in roles %}
+                        <option value="{{ role.id }}" {% if usuario.role and usuario.role.id == role.id %}selected{% endif %}>{{ role.role }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-12 d-flex justify-content-between mt-4">
+                <button type="submit" class="btn shadow" style="background-color: #ff9f00; color: white;">
+                    Guardar
+                </button>
+                <a href="{% url 'users:user' %}" class="btn" style="background-color: rgb(245, 72, 72); color: white;">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
