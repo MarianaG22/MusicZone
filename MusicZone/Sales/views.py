@@ -31,7 +31,7 @@ def add_to_cart(request, instrument_id):
         cart_item.quantity += 1
         cart_item.save()
 
-    return redirect('catalog')
+    return redirect('products:catalog')
 
 # Incrementar la cantidad de un producto en el carrito
 #@login_required

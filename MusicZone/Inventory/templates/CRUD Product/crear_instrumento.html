@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Agregar Instrumento{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container-fluid d-flex justify-content-center align-items-center min-vh-120 px-3">
+    <div class="card shadow-lg bg-white rounded-4 p-5 m-4 col-lg-6 col-md-8 col-sm-12" style="background-color:white;">
+        <h2 class="text-center fw-bold mt-2 mb-4" style="color: #ff9f00;">Agregar Instrumento</h2>
+        <hr class="border-1 opacity-75 mt-1">
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="instrument_name" class="form-label">Nombre:</label>
+                <input type="text" id="instrument_name" name="instrument" class="form-control" required style="border-color: rgb(255,179,71);">
+            </div>
+
+            <div class="mb-3">
+                <label for="type" class="form-label">Tipo:</label>
+                <select id="type" name="type" class="form-select" required style="border-color: rgb(255,179,71);">
+                    <option value="">Selecciona un tipo</option>
+                    {% for t in types %}
+                        <option value="{{ t.id }}">{{ t.type }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="mark" class="form-label">Marca:</label>
+                <select id="mark" name="mark" class="form-select" required style="border-color: rgb(255,179,71);">
+                    <option value="">Selecciona una marca</option>
+                    {% for m in marks %}
+                        <option value="{{ m.id }}">{{ m.mark }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Precio:</label>
+                <input type="number" id="price" name="price" class="form-control" required style="border-color: rgb(255,179,71);">
+            </div>
+
+            <div class="mb-3">
+                <label for="stock" class="form-label">Cantidad:</label>
+                <input type="number" id="stock" name="stock" class="form-control" required style="border-color: rgb(255,179,71);">
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Imagen:</label>
+                <input type="file" id="image" name="image" class="form-control" required style="border-color: rgb(255,179,71);">
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn shadow w-auto px-5 mt-3" style="background-color: #ff9f00; color: white;">Agregar</button>
+                <a href="{% url 'products:instrumento' %}" class="btn shadow w-auto px-5 mt-3 ms-3" style="background-color: rgb(245, 72, 72); color: white;">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

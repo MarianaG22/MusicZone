@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Instrumento{% endblock %}
+
+{% block content %}
+<div class="container-fluid d-flex justify-content-center align-items-center min-vh-120 px-3">
+    <div class="card shadow-lg bg-white rounded-4 p-5 m-4 col-lg-6 col-md-8 col-sm-12" style="background-color:white;">
+        <h2 class="text-center fw-bold mt-2 mb-4" style="color: #ffaa21;">Editar Instrumento</h2>
+        <hr class="border-1 opacity-75 mt-1">
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="instrument" class="form-label">Nombre del Instrumento:</label>
+                <input type="text" id="instrument" name="instrument" class="form-control" required 
+                       style="border-color: #ffaa21;" value="{{ instrument.instrument }}">
+            </div>
+
+            <div class="mb-3">
+                <label for="type" class="form-label">Tipo:</label>
+                <select id="type" name="type" class="form-select" required style="border-color: #ffaa21;">
+                    <option value="">Selecciona un tipo</option>
+                    {% for tipo in types %}
+                        <option value="{{ tipo.id }}" {% if instrument.type.id == tipo.id %}selected{% endif %}>
+                            {{ tipo.type }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="mark" class="form-label">Marca:</label>
+                <select id="mark" name="mark" class="form-select" required style="border-color: #ffaa21;">
+                    <option value="">Selecciona una marca</option>
+                    {% for marca in marks %}
+                        <option value="{{ marca.id }}" {% if instrument.mark.id == marca.id %}selected{% endif %}>
+                            {{ marca.mark }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Precio:</label>
+                <input type="number" id="price" name="price" class="form-control" required 
+                       style="border-color: #ffaa21;" value="{{ instrument.price }}">
+            </div>
+
+            <div class="mb-3">
+                <label for="stock" class="form-label">Stock:</label>
+                <input type="number" id="stock" name="stock" class="form-control" required 
+                       style="border-color: #ffaa21;" value="{{ instrument.stock }}">
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Imagen:</label>
+                <input type="file" id="image" name="image" class="form-control" style="border-color: #ffaa21;">
+                {% if instrument.image %}
+                <div class="mt-2">
+                    <img src="{{ instrument.image.url }}" alt="Imagen del Instrumento" class="img-thumbnail" style="width: 100px;">
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn shadow w-auto px-5 mt-3" 
+                        style="background-color: #ffaa21; color: white;">Guardar cambios</button>
+                <a href="{% url 'products:instrumento' %}" class="btn shadow w-auto px-5 mt-3 ms-3" 
+                   style="background-color: #d9534f; color: white;">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -50,7 +50,7 @@
         </div>
 
         <div class="mt-4 d-flex justify-content-between">
-            <a href="{% url 'catalog' %}" class="btn shadow" style="background-color: #ffc400; color: white;">Ir al Catálogo</a>
+            <a href="{% url 'products:catalog' %}" class="btn shadow" style="background-color: #ffc400; color: white;">Ir al Catálogo</a>
             {% if cart %}
             <form id="saleForm" action="#" method="POST">
                 {% csrf_token %}
