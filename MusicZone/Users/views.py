@@ -4,6 +4,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import User, Role
+from Sales.models import Order
 
 @staff_member_required(login_url='/')
 @login_required
@@ -70,3 +71,8 @@ def remove_user(request, usuario_id):
     
     # Si no es POST, muestra un mensaje o redirige de alguna manera
     return redirect('users:user')  # O puedes mostrar un mensaje de advertencia
+
+@login_required
+def user_profile(request):
+    orders = Order.objects.filter(sale__user=request.user)
+    return render(request, 'user_profile.html', {'orders': orders})
