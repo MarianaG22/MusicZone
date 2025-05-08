@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Cart, Cart_Item, Sale, Sale_Detail
+from .models import Cart, Cart_Item, Sale, Sale_Detail, Order
 from Inventory.models import Instrument
 from Users.models import User
 from django.utils.timezone import now
@@ -83,6 +83,9 @@ def register_sale(request):
         # Registrar la venta
         sale = Sale.objects.create(user=user, total_price=total_price, date=now())
 
+        # Crear la orden relacionada
+        Order.objects.create(sale=sale, order_date=date.today())
+
         for item in items:
             instrument = item.instrument
             # Mensaje de stock bajo 
@@ -115,3 +118,23 @@ def register_sale(request):
     
     return JsonResponse({"success": False, "message": "Método no permitido."})
 
+@login_required
+def order_list(request):
+    if request.user.is_staff:
+        orders = Order.objects.select_related('sale', 'sale__user').all()
+    else:
+        orders = Order.objects.filter(sale__user=request.user)
+
+    return render(request, 'order_list.html', {'orders': orders})
+
+def toggle_order_status(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.user.is_staff and request.method == "POST":
+        new_status = request.POST.get('new_status')
+        if new_status in dict(Order.Status.choices).keys():
+            order.status = new_status
+            order.save()
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': True, 'new_status': order.get_status_display()})
+            return redirect('order_list')
+    return JsonResponse({'success': False, 'error': 'No autorizado'}, status=403)
