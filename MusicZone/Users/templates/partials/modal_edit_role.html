@@ -1,0 +1,23 @@
+<div class="modal fade" id="editRoleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="POST" id="editRoleForm" action="{% url 'users:edit_role' %}">
+            {% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title">Editar Rol</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="role_id" id="edit_role_id">
+                    <div class="mb-3">
+                        <label for="edit_role_name" class="form-label">Nombre del Rol</label>
+                        <input type="text" class="form-control" name="role_name" id="edit_role_name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -9,7 +9,8 @@ from .models import User, Role
 @login_required
 def user(request):
     usuarios = User.objects.all()
-    return render(request, 'users/user.html', {'usuarios': usuarios})
+    roles = Role.objects.all()
+    return render(request, 'users/user.html', {'usuarios': usuarios,'roles': roles})
 
 @staff_member_required(login_url='/')
 @login_required
@@ -70,3 +71,43 @@ def remove_user(request, usuario_id):
     
     # Si no es POST, muestra un mensaje o redirige de alguna manera
     return redirect('users:user')  # O puedes mostrar un mensaje de advertencia
+
+@staff_member_required(login_url='/')
+@login_required
+def add_role(request):
+    if request.method == 'POST':
+        nombre_rol = request.POST.get('role')
+        if not Role.objects.filter(role=nombre_rol).exists():
+            Role.objects.create(role=nombre_rol)
+            messages.success(request, 'Rol creado correctamente.')
+        else:
+            messages.error(request, 'Este rol ya existe.')
+            return redirect('users:user')
+    return redirect('users:user')
+
+@staff_member_required(login_url='/')
+@login_required
+def edit_role(request):
+    if request.method == 'POST':
+        role_id = request.POST.get('role_id')
+        new_name = request.POST.get('role_name')
+        rol = get_object_or_404(Role, pk=role_id)
+
+        if Role.objects.filter(role=new_name).exclude(pk=role_id).exists():
+            messages.error(request, 'Este nombre de rol ya está en uso.')
+        else:
+            rol.role = new_name
+            rol.save()
+            messages.success(request, 'Rol actualizado correctamente.')
+
+    return redirect('users:user')
+
+@staff_member_required(login_url='/')
+@login_required
+def delete_role(request, role_id):
+    rol = get_object_or_404(Role, pk=role_id)
+    if request.method == 'POST':
+        rol.delete()
+        messages.success(request, 'Rol eliminado correctamente.')
+        return redirect('users:user')
+    return redirect('users:user')
