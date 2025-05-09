@@ -4,6 +4,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import User, Role
+from Sales.models import Order
 
 @staff_member_required(login_url='/')
 @login_required
@@ -116,3 +117,7 @@ def delete_role(request, role_id):
         messages.success(request, 'Rol eliminado correctamente.')
         return redirect('users:role')
     return redirect('users:role')
+@login_required
+def user_profile(request):
+    orders = Order.objects.filter(sale__user=request.user)
+    return render(request, 'user_profile.html', {'orders': orders})

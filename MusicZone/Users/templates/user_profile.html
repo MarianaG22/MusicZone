@@ -1,0 +1,52 @@
+<h1>Perfil de Usuario</h1>
+
+<!-- Sección para editar datos personales -->
+<section>
+    <h2>Editar Datos Personales</h2>
+    <form method="POST" action="{% url 'users:edit_user' request.user.id %}">
+        {% csrf_token %}
+        <label for="username">Nombre de usuario:</label>
+        <input type="text" id="username" name="username" value="{{ request.user.username }}" required><br>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" value="{{ request.user.email }}" required><br>
+
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" value="{{ request.user.name }}" required><br>
+
+        <label for="last_name">Apellido:</label>
+        <input type="text" id="last_name" name="last_name" value="{{ request.user.last_name }}" required><br>
+
+        <label for="password">Nueva contraseña (opcional):</label>
+        <input type="password" id="password" name="password"><br>
+
+        <button type="submit">Guardar cambios</button>
+    </form>
+</section>
+
+<!-- Sección para el historial de compras -->
+<section>
+    <h2>Historial de Compras</h2>
+    {% if orders %}
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.order_date }}</td>
+                <td>${{ order.sale.total_price }}</td>
+                <td>{{ order.get_status_display }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No tienes compras registradas.</p>
+    {% endif %}
+</section>

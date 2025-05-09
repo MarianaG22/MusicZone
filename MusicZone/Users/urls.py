@@ -13,4 +13,5 @@ urlpatterns = [
    path('roles_add/', views.add_role, name='add_role'),
    path('roles_edit/<int:role_id>/', views.edit_role, name='edit_role'),
    path('roles_delete/<int:role_id>/', views.delete_role, name='delete_role'),
+   path('perfil/', views.user_profile, name='user_profile'),
 ]
