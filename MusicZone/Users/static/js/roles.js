@@ -1,67 +1,44 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const createModal = document.getElementById('addRoleModal');
-    const editModal = document.getElementById('editRoleModal');
-    const deleteModal = document.getElementById('deleteRoleModal');
-    const rolesModalElement = document.getElementById('rolesModal');
-    const rolesModalInstance = bootstrap.Modal.getInstance(rolesModalElement) || new bootstrap.Modal(rolesModalElement);
+// Modal de crear rol
+function openCreateModal() {
+    document.getElementById('addRoleModal').style.display = 'block';
+}
 
-    let nextModal = null;
+function closeCreateModal() {
+    document.getElementById('addRoleModal').style.display = 'none';
+}
+// Modal de editar rol
+function openEditModal(elemento) {
+    const modal = document.getElementById("editRoleModal");
 
-    // Preparar datos para el modal de edición
-    editModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const roleId = button.getAttribute('data-role-id');
-        const roleName = button.getAttribute('data-role-name');
+    // Obtener los datos desde el botón o elemento
+    const roleId = elemento.getAttribute("data-id");
+    const roleName = elemento.getAttribute("data-name");
 
-        document.getElementById('edit_role_id').value = roleId;
-        document.getElementById('edit_role_name').value = roleName;
-    });
+    // Llenar los campos del modal
+    document.getElementById("edit_role_id").value = roleId;
+    document.getElementById("edit_role_name").value = roleName;
 
-    // Preparar datos para el modal de eliminación
-    deleteModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const roleId = button.getAttribute('data-role-id');
-        const roleName = button.getAttribute('data-role-name');
+    // Actualizar la acción del formulario
+    const formEditar = document.getElementById("editForm");
+    formEditar.action = `/usuarios/roles_edit/${roleId}/`;
 
-        document.getElementById('delete_role_name').textContent = roleName;
-        document.getElementById('deleteRoleForm').action = `/usuarios/roles/delete/${roleId}/`;
-    });
+    // Mostrar modal
+    modal.style.display = "block";
+}
 
-    // Detectar clic en botones de editar o eliminar
-    document.querySelectorAll('[data-bs-target="#editRoleModal"], [data-bs-target="#deleteRoleModal"]').forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
+function closeEditModal() {
+    document.getElementById("editRoleModal").style.display = "none";
+}
 
-            const targetId = button.getAttribute('data-bs-target');
-            nextModal = new bootstrap.Modal(document.querySelector(targetId));
+// Modal de eliminación
+function openDeleteModal(roleId, roleName) {
+    const form = document.getElementById('deleteForm');
+    form.action = `/usuarios/roles_delete/${roleId}/`; 
+    document.getElementById('delete_role_name').textContent = `"${roleName}"`;
+    document.getElementById('deleteModal').style.display = "block";
+}
 
-            rolesModalInstance.hide(); // Oculta modal de roles pero no elimina el backdrop
-        });
-    });
-
-    // Al cerrarse rolesModal, mostrar el modal siguiente (edit o delete)
-    rolesModalElement.addEventListener('hidden.bs.modal', function () {
-        if (nextModal) {
-            nextModal.show();
-            nextModal = null;
-        } else {
-            // Solo eliminar el fondo oscuro cuando se cierra completamente rolesModal
-            const backdrop = document.querySelector('.modal-backdrop');
-            if (backdrop) {
-                backdrop.parentNode.removeChild(backdrop);
-            }
-        }
-    });
-
-    // Cuando se cierre editModal o deleteModal, volver a mostrar rolesModal
-    [editModal, deleteModal, createModal].forEach(modal => {
-        modal.addEventListener('hidden.bs.modal', function () {
-            rolesModalInstance.show();
-        });
-    });
-
-    // Mostrar el modal de roles cuando se cierre el modal de crear rol
-    createModal.addEventListener('hidden.bs.modal', function () {
-        rolesModalInstance.show(); // Muestra rolesModal cuando el modal de crear rol se cierra
-    });
-});
+function closeDeleteModal() {
+    // Ocultar modal cuando el usuario le de en cerrar
+    document.getElementById('deleteModal').style.display = "none";
+}

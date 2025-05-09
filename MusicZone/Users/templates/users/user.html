@@ -17,10 +17,6 @@
             <div class="col-12 col-md-6 text-md-end mt-2 mt-md-0">
                 <a href="{% url 'users:add_user' %}" class="btn shadow"
                     style="background-color: rgb(245, 72, 72); color: white;">Agregar</a>
-                <button type="button" class="btn shadow" style="background-color: rgb(245, 72, 72); color: white;"
-                    data-bs-toggle="modal" data-bs-target="#rolesModal">
-                    Ver roles
-                </button>
             </div>
         </div>
         <hr class="border-1 opacity-75 mt-1 mb-3" style="color: rgb(230, 120, 120);">
@@ -70,11 +66,6 @@
     </div>
 </div>
 
-{% include "partials/modal_roles.html" %}
-{% include "partials/modal_create_role.html" %}
-{% include "partials/modal_edit_role.html" %}
-{% include "partials/modal_delete_role.html" %}
-
 <script>
     $(document).ready(function () {
         $('#usersTable').DataTable({
@@ -99,7 +90,5 @@
         });
     });
 </script>
-
-<script src="{% static 'js/roles.js' %}"></script>
 
 {% endblock %}

@@ -9,8 +9,7 @@ from .models import User, Role
 @login_required
 def user(request):
     usuarios = User.objects.all()
-    roles = Role.objects.all()
-    return render(request, 'users/user.html', {'usuarios': usuarios,'roles': roles})
+    return render(request, 'users/user.html', {'usuarios': usuarios})
 
 @staff_member_required(login_url='/')
 @login_required
@@ -74,6 +73,12 @@ def remove_user(request, usuario_id):
 
 @staff_member_required(login_url='/')
 @login_required
+def role(request):
+    roles = Role.objects.all()
+    return render(request, 'roles/role.html', {'roles': roles})
+
+@staff_member_required(login_url='/')
+@login_required
 def add_role(request):
     if request.method == 'POST':
         nombre_rol = request.POST.get('role')
@@ -83,24 +88,24 @@ def add_role(request):
         else:
             messages.error(request, 'Este rol ya existe.')
             return redirect('users:user')
-    return redirect('users:user')
+    return redirect('users:role')
 
 @staff_member_required(login_url='/')
 @login_required
-def edit_role(request):
+def edit_role(request, role_id):
+    rol = get_object_or_404(Role, pk=role_id)
+    roles = Role.objects.all()
     if request.method == 'POST':
-        role_id = request.POST.get('role_id')
         new_name = request.POST.get('role_name')
-        rol = get_object_or_404(Role, pk=role_id)
-
+        
         if Role.objects.filter(role=new_name).exclude(pk=role_id).exists():
             messages.error(request, 'Este nombre de rol ya está en uso.')
         else:
             rol.role = new_name
             rol.save()
             messages.success(request, 'Rol actualizado correctamente.')
-
-    return redirect('users:user')
+            return redirect('users:role')
+    return render(request, 'roles/role.html', {'roles': roles})
 
 @staff_member_required(login_url='/')
 @login_required
@@ -109,5 +114,5 @@ def delete_role(request, role_id):
     if request.method == 'POST':
         rol.delete()
         messages.success(request, 'Rol eliminado correctamente.')
-        return redirect('users:user')
-    return redirect('users:user')
+        return redirect('users:role')
+    return redirect('users:role')
