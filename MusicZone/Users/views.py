@@ -74,5 +74,6 @@ def remove_user(request, usuario_id):
 
 @login_required
 def user_profile(request):
-    orders = Order.objects.filter(sale__user=request.user)
+    orders = Order.objects.filter(sale__user=request.user).select_related('sale').prefetch_related('sale__sale_detail_set')
+    print(orders)
     return render(request, 'user_profile.html', {'orders': orders})

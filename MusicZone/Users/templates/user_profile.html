@@ -34,6 +34,7 @@
                 <th>Fecha</th>
                 <th>Total</th>
                 <th>Estado</th>
+                <th>Detalles</th>
             </tr>
         </thead>
         <tbody>
@@ -41,7 +42,22 @@
             <tr>
                 <td>{{ order.order_date }}</td>
                 <td>${{ order.sale.total_price }}</td>
-                <td>{{ order.get_status_display }}</td>
+                <td>{{ order.status }}</td>
+                <td>
+                    <button onclick="toggleDetails('details-{{ order.id }}')">Ver Detalles</button>
+                </td>
+            </tr>
+            <tr id="details-{{ order.id }}" style="display: none;">
+                <td colspan="4">
+                    <h4>Detalles del Pedido</h4>
+                    <ul>
+                        {% for detail in order.sale.sale_detail_set.all %}
+                        <li>
+                            {{ detail.instrument.instrument }} - Cantidad: {{ detail.quantity }} - Precio: ${{ detail.price }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -50,3 +66,14 @@
     <p>No tienes compras registradas.</p>
     {% endif %}
 </section>
+
+<script>
+    function toggleDetails(id) {
+        const element = document.getElementById(id);
+        if (element.style.display === "none") {
+            element.style.display = "table-row";
+        } else {
+            element.style.display = "none";
+        }
+    }
+</script>
