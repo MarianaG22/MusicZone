@@ -9,4 +9,5 @@ urlpatterns = [
    path('editar/<int:usuario_id>/', views.edit_user, name='edit_user'),
    path('eliminar/<int:usuario_id>/', views.remove_user, name='remove_user'),
    path('perfil/', views.user_profile, name='user_profile'),
+   path('marcar-recibido/<int:order_id>/', views.mark_as_received, name='mark_as_received'),
 ]

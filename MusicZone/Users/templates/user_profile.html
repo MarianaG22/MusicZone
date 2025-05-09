@@ -45,6 +45,12 @@
                 <td>{{ order.status }}</td>
                 <td>
                     <button onclick="toggleDetails('details-{{ order.id }}')">Ver Detalles</button>
+                    {% if order.status != 'recibido' %}
+                    <form method="POST" action="{% url 'users:mark_as_received' order.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Marcar como Recibido</button>
+                    </form>
+                    {% endif %}
                 </td>
             </tr>
             <tr id="details-{{ order.id }}" style="display: none;">
