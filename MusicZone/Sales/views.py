@@ -121,9 +121,9 @@ def register_sale(request):
 @login_required
 def order_list(request):
     if request.user.is_staff:
-        orders = Order.objects.select_related('sale', 'sale__user').all()
+        orders = Order.objects.select_related('sale', 'sale__user').all().order_by('-order_date')
     else:
-        orders = Order.objects.filter(sale__user=request.user)
+        orders = Order.objects.filter(sale__user=request.user).order_by('-order_date')
 
     return render(request, 'order_list.html', {'orders': orders})
 
