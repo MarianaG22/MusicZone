@@ -26,7 +26,7 @@
 
 <body class="bg-image">
 
-<nav class="navbar navbar-expand-lg navbar-dark px-3" style="background-color: #ff9f00;">
+<nav class="navbar navbar-expand-lg navbar-dark px-3" style="background-color: #3a2125;">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
             <img src="{% static 'img/Logo.png' %}" class="me-2" style="height: 50px;" alt="Logo">
@@ -56,7 +56,7 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-dark px-3 d-lg-none" style="background-color: #ff9f00;">
+<nav class="navbar navbar-dark px-3 d-lg-none" style="background-color: #3a2125;">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
             <span class="navbar-toggler-icon"></span>
@@ -66,7 +66,7 @@
 
 <div class="d-flex min-vh-100">
         <!-- Sidebar para pantallas grandes -->
-        <div class="d-none d-lg-block text-white p-3" style="background-color: #ff9f00; width: 250px;">
+        <div class="d-none d-lg-block text-white p-3" style="background-color: #222222; width: 250px;">
             <div class="text-center py-4">
                 <img src="{% static 'img/Logo.png' %}" style="height: 120px;" alt="Logo">
                 <p class="mt-2 fw-bold">Hola, {{ user.name }}!</p>
@@ -74,29 +74,29 @@
             <ul class="nav flex-column px-2">
                 {% if user.is_staff %}
                 <li class="nav-item mb-2">
-                    <a href="{% url 'home' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Home</a>
+                    <a href="{% url 'home' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Home</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="#" class="btn w-100" style="background-color: #ffaa21; color: white;">Perfil de Usuario</a>
+                    <a href="#" class="btn w-100" style="background-color: #3a2125; color: white;">Perfil de Usuario</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="{% url 'products:instrumento' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Productos</a>
+                    <a href="{% url 'products:instrumento' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Productos</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="{% url 'sales:order_list' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Ordenes</a>
+                    <a href="{% url 'sales:order_list' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Ordenes</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="{% url 'users:user' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Usuarios</a>
+                    <a href="{% url 'users:user' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Usuarios</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="{% url 'users:role' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Roles</a>
+                    <a href="{% url 'users:role' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Roles</a>
                 </li>
                 {% endif %}
             </ul>
         </div>
 
         <!-- Offcanvas para móviles -->
-        <div class="offcanvas offcanvas-start text-white" id="sidebarMenu" style="background-color: #ff9f00; width: 250px;">
+        <div class="offcanvas offcanvas-start text-white" id="sidebarMenu" style="background-color: #222222; width: 250px;">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title">Menú</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
@@ -109,22 +109,22 @@
                 <ul class="nav flex-column">
                     {% if user.is_staff %}
                     <li class="nav-item mb-2">
-                        <a href="{% url 'home' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Home</a>
+                        <a href="{% url 'home' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Home</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="#" class="btn w-100" style="background-color: #ffaa21; color: white;">Perfil de Usuario</a>
+                        <a href="#" class="btn w-100" style="background-color: #3a2125; color: white;">Perfil de Usuario</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="{% url 'products:instrumento' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Productos</a>
+                        <a href="{% url 'products:instrumento' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Productos</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="{% url 'sales:order_list' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Ordenes</a>
+                        <a href="{% url 'sales:order_list' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Ordenes</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="{% url 'users:user' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Usuarios</a>
+                        <a href="{% url 'users:user' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Usuarios</a>
                     </li>
                     <li class="nav-item mb-2">
-                    <a href="{% url 'users:role' %}" class="btn w-100" style="background-color: #ffaa21; color: white;">Roles</a>
+                    <a href="{% url 'users:role' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Roles</a>
                     </li>
                     {% endif %}
                 </ul>

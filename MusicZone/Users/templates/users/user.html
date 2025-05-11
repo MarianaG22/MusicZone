@@ -10,20 +10,21 @@
 
 <div class="container py-4">
     <div class="card shadow-lg rounded-4 p-4" style="background-color:white;">
+        <h1 class="text-center fw-bold mt-2 mb-4" style="color: #634242">Gestión de Usuarios</h1>
+        <hr class="border-1 opacity-75 mt-1 mb-3" style="color: rgb(230, 120, 120);">
         <div class="row mb-4 align-items-center">
             <div class="col-12 col-md-6">
-                <h2 class="fw-bold mb-0" style="color: #ff9f00;">Gestión de Usuarios</h2>
             </div>
+            <!-- Agregar usuario -->
             <div class="col-12 col-md-6 text-md-end mt-2 mt-md-0">
                 <a href="{% url 'users:add_user' %}" class="btn shadow"
                     style="background-color: rgb(245, 72, 72); color: white;">Agregar</a>
             </div>
         </div>
-        <hr class="border-1 opacity-75 mt-1 mb-3" style="color: rgb(230, 120, 120);">
 
         <div class="table-responsive">
             <table id="usersTable" class="table table-bordered table-hover align-middle">
-                <thead class="text-center" style="background-color: #ff9f00; color: white;">
+                <thead class="text-center">
                     <tr>
                         <th>ID</th>
                         <th>Nombre de Usuario</th>

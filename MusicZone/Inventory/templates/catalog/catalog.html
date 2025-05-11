@@ -11,7 +11,7 @@
 
 <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100 px-3">
     <div class="card shadow-lg rounded-4 p-4 m-4 col-lg-11 col-md-10 col-sm-12" style="background-color: white;">
-        <h2 class="text-center fw-bold mt-2 mb-4" style="color: #ff9f00;">Catálogo de Instrumentos</h2>
+        <h1 class="text-center fw-bold mt-2 mb-4" style="color: #634242">Catálogo de Instrumentos</h1>
         <hr class="border-1 opacity-75 mt-1" style="border-color: #f54848;">
 
         <!-- Filtro por tipo -->
@@ -58,10 +58,11 @@
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card" style="background-color: #fff8f1;">
                     <div class="card-body">
+                        <img src="{{ instrument.image.url }}" alt="Imagen del instrumento" class="card-img-top" style="max-height: 200px; object-fit: contain;" loading="lazy">
                         <h5 class="card-title">{{ instrument.instrument }}</h5>
-                        <p class="card-text"><strong style="color:#ff9f00;">Tipo:</strong> {{ instrument.type }}</p>
-                        <p class="card-text"><strong style="color:#ff9f00;">Marca:</strong> {{ instrument.mark }}</p>
-                        <p class="card-text"><strong style="color:#ff9f00;">Precio:</strong> ${{ instrument.price|floatformat:0|intcomma }}</p>
+                        <p class="card-text"><strong style="color:#a24929;">Tipo:</strong> {{ instrument.type }}</p>
+                        <p class="card-text"><strong style="color:#a24929;">Marca:</strong> {{ instrument.mark }}</p>
+                        <p class="card-text"><strong style="color:#a24929;">Precio:</strong> ${{ instrument.price|floatformat:0|intcomma }}</p>
                         <a href="{% url 'sales:add_to_cart' instrument.id %}" class="btn w-100 mt-2" style="background-color: #f54848; color: white;">Agregar al Carrito</a> 
                     </div>
                 </div>
