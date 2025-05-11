@@ -62,7 +62,7 @@ def instrumento(request):
     page_number = request.GET.get('page')
     instruments = paginator.get_page(page_number)
 
-    return render(request, 'CRUD Product/instrumento.html', {
+    return render(request, 'CRUD Product/instrument.html', {
         'instruments': instruments,
         'types': types,
         'marks': marks,
@@ -83,15 +83,15 @@ def crear_instrumento(request):
         # Validaciones
         if not instrument_name:
             messages.error(request, 'El nombre del instrumento es obligatorio.')
-            return render(request, 'catalog/crearProduct.html', {'types': types, 'marks': marks})
+            return render(request, 'CRUD Product/create_instrument.html', {'types': types, 'marks': marks})
         
         if not type_id:
             messages.error(request, 'Debe seleccionar un tipo.')
-            return render(request, 'catalog/crearProduct.html', {'types': types, 'marks': marks})
+            return render(request, 'CRUD Product/create_instrument.html', {'types': types, 'marks': marks})
 
         if not mark_id:
             messages.error(request, 'Debe seleccionar una marca.')
-            return render(request, 'catalog/crearProduct.html', {'types': types, 'marks': marks})
+            return render(request, 'CRUD Product/create_instrument.html', {'types': types, 'marks': marks})
 
         # Obtiene instancias de Type y Mark
         type_instance = get_object_or_404(Type, pk=type_id)
@@ -111,7 +111,7 @@ def crear_instrumento(request):
         messages.success(request, f'El instrumento "{instrument.instrument}" ha sido creado exitosamente.')
         return redirect('/')
 
-    return render(request, 'CRUD Product/crear_instrumento.html', {'types': types, 'marks': marks})
+    return render(request, 'CRUD Product/create_instrument.html', {'types': types, 'marks': marks})
 
 def editar_instrumento(request, instrument_id):
     instrument = get_object_or_404(Instrument, id=instrument_id)
@@ -149,7 +149,7 @@ def editar_instrumento(request, instrument_id):
         'marks': marks,
     }
 
-    return render(request, 'CRUD Product/editar_instrumento.html', context)
+    return render(request, 'CRUD Product/edit_instrument.html', context)
 
 def eliminar_instrumento(request, instrument_id):
     instrument = get_object_or_404(Instrument, id=instrument_id)
@@ -159,4 +159,4 @@ def eliminar_instrumento(request, instrument_id):
         messages.success(request, f'El instrumento "{instrument.instrument}" ha sido eliminado exitosamente.')
         return redirect('products:instrumento')
 
-    return render(request, 'CRUD Product/eliminar_instrumento.html', {'instrument': instrument})
+    return render(request, 'CRUD Product/delete_instrument.html', {'instrument': instrument})
