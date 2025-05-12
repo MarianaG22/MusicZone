@@ -11,7 +11,7 @@
 
 <div class="container-fluid d-flex justify-content-center align-items-center min-vh-120 px-3">
     <div class="card shadow-lg rounded-4 p-4 m-4 col-lg-11 col-md-10 col-sm-12" style="background-color:white;">
-        <h2 class="text-center fw-bold mt-2 mb-4" style="color: #ff9f00;">Carrito de Compras</h2>
+        <h2 class="text-center fw-bold mt-2 mb-4" style="color: #634242;">Carrito de Compras</h2>
         <hr class="border-1 opacity-75 mt-1">
 
         {% if items %}
@@ -33,7 +33,7 @@
                         <td class="align-middle text-center">${{ item.instrument.price }}</td>
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center">
-                                <a href="{% url 'sales:decrease_quantity' item.id %}" class="btn btn-sm" style="background-color: #ff9f00;">-</a>
+                                <a href="{% url 'sales:decrease_quantity' item.id %}" class="btn btn-sm" style="background-color: #ffaa21;">-</a>
                                 <span class="mx-2">{{ item.quantity }}</span>
                                 <a href="{% url 'sales:increase_quantity' item.id %}" class="btn btn-sm" style="background-color: rgb(245, 72, 72); color: white;">+</a>
                             </div>
@@ -54,7 +54,7 @@
         </div>
 
         <div class="mt-4 d-flex justify-content-between">
-            <a href="{% url 'products:catalog' %}" class="btn shadow" style="background-color: #ffc400; color: white;">Ir al Catálogo</a>
+            <a href="{% url 'products:catalog' %}" class="btn shadow" style="background-color: #ffaa21; color: white;">Ir al Catálogo</a>
             {% if cart %}
             <form id="saleForm" action="{% url 'sales:register_sale' %}" method="POST">
                 {% csrf_token %}

@@ -74,10 +74,7 @@
             <ul class="nav flex-column px-2">
                 {% if user.is_staff %}
                 <li class="nav-item mb-2">
-                    <a href="{% url 'home' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Home</a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="#" class="btn w-100" style="background-color: #3a2125; color: white;">Perfil de Usuario</a>
+                    <a href="{% url 'users:user_profile' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Perfil de Usuario</a>
                 </li>
                 <li class="nav-item mb-2">
                     <a href="{% url 'products:instrumento' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Productos</a>
@@ -109,10 +106,7 @@
                 <ul class="nav flex-column">
                     {% if user.is_staff %}
                     <li class="nav-item mb-2">
-                        <a href="{% url 'home' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Home</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="#" class="btn w-100" style="background-color: #3a2125; color: white;">Perfil de Usuario</a>
+                        <a href="{% url 'users:user_profile' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Perfil de Usuario</a>
                     </li>
                     <li class="nav-item mb-2">
                         <a href="{% url 'products:instrumento' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Productos</a>

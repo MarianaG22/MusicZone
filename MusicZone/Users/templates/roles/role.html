@@ -19,7 +19,7 @@
             <!-- Agregar rol -->
              <div class="col-12 col-md-6 text-md-end mt-2 mt-md-0">
                 <button onclick="openCreateModal()" class="btn shadow"
-                    style="background-color: rgb(245, 72, 72); color: white;">Agregar</button>
+                    style="background-color: #ffaa21; color: white;">Agregar</button>
             </div>
         </div>
 
@@ -67,7 +67,7 @@
         <form id="createForm" method="POST" action="{% url 'users:add_role' %}">
             {% csrf_token %}
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #ff9f00; color: white;">
+                <div class="modal-header text-white" style="background-color: #ffb743;">
                     <h5 class="modal-title" id="addRoleModalLabel">Crear Nuevo Rol</h5>
                     <span class="close" type="submit" onclick="closeCreateModal()">&times; </span>
                 </div>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn shadow" style="background-color: rgb(245, 72, 72); color: white;">Crear Rol</button>
+                    <button type="submit" class="btn shadow text-white" style="background-color: #f0b04a;">Crear Rol</button>
                 </div>
             </div>
         </form>
@@ -90,7 +90,7 @@
         <form id="editForm" method="POST">
             {% csrf_token %}
             <div class="modal-content">
-                <div class="modal-header bg-warning text-white">
+                <div class="modal-header text-white" style="background-color: #ffb743;">
                     <h5 class="modal-title">Editar Rol</h5>
                     <span class="close" type="submit" onclick="closeEditModal()">&times;</span>
                 </div>
@@ -102,7 +102,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn shadow" style="background-color: rgb(245, 72, 72); color: white;">Guardar cambios</button>
+                    <button type="submit" class="btn shadow text-white" style="background-color: #f0b04a;">Guardar cambios</button>
                 </div>
             </div>
         </form>
@@ -114,12 +114,12 @@
         <form method="POST" id="deleteForm">
             {% csrf_token %}
             <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
+                <div class="modal-header text-white" style="background-color: rgb(245, 72, 72);">
                     <h5 class="modal-title">Eliminar Rol</h5>
                     <span class="close" type="submit" onclick="closeDeleteModal()">&times;</span>
                 </div>
                 <div class="modal-body">
-                    <p>¿Estás seguro de que deseas eliminar el rol "<span id="delete_role_name"></span>"?</p>
+                    <p>¿Estás seguro de que deseas eliminar el rol <span id="delete_role_name"></span>?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Si, eliminar</button>
@@ -129,4 +129,5 @@
     </div>
 </div>
 <script src="{% static 'js/roles.js' %}"></script>
+<link href="{% static 'css/role.css' %}" rel="stylesheet">
 {% endblock %}
