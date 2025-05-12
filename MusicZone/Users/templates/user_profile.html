@@ -17,7 +17,7 @@
             <div class="card shadow-lg bg-white rounded-4 p-4">
                 <div class="text-center mb-4">
                     <ion-icon name="person-circle-outline"
-                        style="font-size: 150px; color: rgb(240, 84, 84);"></ion-icon>
+                        style="font-size: 130px; color: rgb(240, 84, 84);"></ion-icon>
                 </div>
 
                 <h2 class="fw-bold text-center" style="color: #634242;">Datos Personales</h2>
@@ -70,8 +70,8 @@
 
                 <div class="table-responsive">
                     {% if orders %}
-                    <table class="table table-hover rounded-3 overflow-hidden">
-                        <thead class="text-white" style="background-color: #634242;">
+                    <table class="table table-hover rounded-3 overflow-hidden text">
+                        <thead class="text-white text-center " style="background-color: #634242;">
                             <tr>
                                 <th>Fecha</th>
                                 <th>Total</th>
@@ -82,27 +82,33 @@
                         <tbody>
                             {% for order in orders %}
                             <tr>
-                                <td>{{ order.order_date }}</td>
-                                <td>${{ order.sale.total_price }}</td>
-                                <td>{{ order.get_status }}</td>
-                                <td>
-                                    <button onclick="toggleDetails('details-{{ order.id }}')">Ver Detalles</button>
-                                    {% if order.status != 'recibido' %}
-                                    <form method="POST" action="{% url 'users:mark_as_received' order.id %}"
-                                        style="display:inline;">
-                                        {% csrf_token %}
-                                        <button type="submit">Marcar como Recibido</button>
-                                    </form>
-                                    {% endif %}
+                                <td class="text-center">{{ order.order_date }}</td>
+                                <td class="text-center">${{ order.sale.total_price }}</td>
+                                <td class="text-center">{{ order.get_status }}</td>
+                                <td class="text-center">
+                                    <div class="d-flex gap-2">
+                                        <button onclick="toggleDetails('details-{{ order.id }}')" class="btn shadow"
+                                            style="background-color: rgb(240, 84, 84); color: white;">Ver
+                                            Detalles</button>
+
+                                        {% if order.status != 'recibido' %}
+                                        <form method="POST" action="{% url 'users:mark_as_received' order.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn shadow"
+                                                style="background-color: #ffaa21; color: white;">Marcar como
+                                                Recibido</button>
+                                        </form>
+                                        {% endif %}
+                                    </div>
                                 </td>
                             </tr>
                             <tr id="details-{{ order.id }}" style="display: none;">
                                 <td colspan="4">
-                                    <h4>Detalles del Pedido</h4>
+                                    <h4 style="color: #ffaa21;">Detalles del Pedido</h4>
                                     <ul>
                                         {% for detail in order.sale.sale_detail_set.all %}
                                         <li>
-                                            {{ detail.instrument.instrument }} - Cantidad: {{ detail.quantity }} -
+                                            Nombre: {{ detail.instrument.instrument }} - Cantidad: {{ detail.quantity }} -
                                             Precio: ${{ detail.price }}
                                         </li>
                                         {% endfor %}
@@ -118,7 +124,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -127,13 +132,8 @@
 <script>
     function toggleDetails(id) {
         const element = document.getElementById(id);
-        if (element.style.display === "none") {
-            element.style.display = "table-row";
-        } else {
-            element.style.display = "none";
-        }
+        element.style.display = (element.style.display === "none") ? "table-row" : "none";
     }
 </script>
 
 {% endblock %}
-
