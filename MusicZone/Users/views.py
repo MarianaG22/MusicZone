@@ -119,5 +119,22 @@ def delete_role(request, role_id):
     return redirect('users:role')
 @login_required
 def user_profile(request):
+<<<<<<< HEAD
     orders = Order.objects.filter(sale__user=request.user)
     return render(request, 'user_profile.html', {'orders': orders})
+=======
+    orders = Order.objects.filter(sale__user=request.user).select_related('sale').prefetch_related('sale__sale_detail_set')
+    print(orders)
+    return render(request, 'user_profile.html', {'orders': orders})
+
+@login_required
+def mark_as_received(request, order_id):
+    order = get_object_or_404(Order, id=order_id, sale__user=request.user)
+    if order.status != Order.Status.RECIBIDO:
+        order.status = Order.Status.RECIBIDO
+        order.save()
+        messages.success(request, 'El pedido ha sido marcado como recibido.')
+    else:
+        messages.info(request, 'El pedido ya estaba marcado como recibido.')
+    return redirect('users:user_profile')
+>>>>>>> origin/develop-Cristian
