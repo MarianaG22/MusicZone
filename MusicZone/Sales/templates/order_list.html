@@ -31,8 +31,8 @@
                                 {% csrf_token %}
                                 <select name="new_status" class="form-select form-select-sm w-auto d-inline" style="border-color: #ff9f00;" onchange="this.form.submit()">
                                     <option value="pendiente" {% if order.status == 'pendiente' %}selected{% endif %}>Pendiente</option>
-                                    <option value="enviada" {% if order.status == 'enviada' %}selected{% endif %}>Enviada</option>
-                                    <option value="entregada" {% if order.status == 'entregada' %}selected{% endif %}>Entregada</option>
+                                    <option value="enviado" {% if order.status == 'enviado' %}selected{% endif %}>Enviado</option>
+                                    <option value="entregado" {% if order.status == 'entregado' %}selected{% endif %}>Entregado</option>
                                 </select>
                             </form>
                             {% else %}
