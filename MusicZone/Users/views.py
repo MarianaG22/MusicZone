@@ -112,17 +112,14 @@ def edit_role(request, role_id):
 @login_required
 def delete_role(request, role_id):
     rol = get_object_or_404(Role, pk=role_id)
-    if request.method == 'POST':
+    if request.method == 'POST': 
         rol.delete()
         messages.success(request, 'Rol eliminado correctamente.')
         return redirect('users:role')
     return redirect('users:role')
+
 @login_required
 def user_profile(request):
-<<<<<<< HEAD
-    orders = Order.objects.filter(sale__user=request.user)
-    return render(request, 'user_profile.html', {'orders': orders})
-=======
     orders = Order.objects.filter(sale__user=request.user).select_related('sale').prefetch_related('sale__sale_detail_set')
     print(orders)
     return render(request, 'user_profile.html', {'orders': orders})
@@ -137,4 +134,3 @@ def mark_as_received(request, order_id):
     else:
         messages.info(request, 'El pedido ya estaba marcado como recibido.')
     return redirect('users:user_profile')
->>>>>>> origin/develop-Cristian

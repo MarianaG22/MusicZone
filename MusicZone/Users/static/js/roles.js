@@ -1,44 +1,64 @@
+// Mostrar modal
+function showModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.classList.add("show");
+}
+
+// Ocultar modal
+function hideModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.classList.remove("show");
+}
+
 // Modal de crear rol
 function openCreateModal() {
-    document.getElementById('addRoleModal').style.display = 'block';
+    showModal("addRoleModal");
 }
 
 function closeCreateModal() {
-    document.getElementById('addRoleModal').style.display = 'none';
+    hideModal("addRoleModal");
 }
+
 // Modal de editar rol
 function openEditModal(elemento) {
     const modal = document.getElementById("editRoleModal");
 
-    // Obtener los datos desde el botón o elemento
     const roleId = elemento.getAttribute("data-id");
     const roleName = elemento.getAttribute("data-name");
 
-    // Llenar los campos del modal
     document.getElementById("edit_role_id").value = roleId;
     document.getElementById("edit_role_name").value = roleName;
 
-    // Actualizar la acción del formulario
     const formEditar = document.getElementById("editForm");
     formEditar.action = `/usuarios/roles_edit/${roleId}/`;
 
-    // Mostrar modal
-    modal.style.display = "block";
+    showModal("editRoleModal");
 }
 
 function closeEditModal() {
-    document.getElementById("editRoleModal").style.display = "none";
+    hideModal("editRoleModal");
 }
 
 // Modal de eliminación
 function openDeleteModal(roleId, roleName) {
     const form = document.getElementById('deleteForm');
-    form.action = `/usuarios/roles_delete/${roleId}/`; 
+    form.action = `/usuarios/roles_delete/${roleId}/`;
     document.getElementById('delete_role_name').textContent = `"${roleName}"`;
-    document.getElementById('deleteModal').style.display = "block";
+
+    showModal("deleteModal");
 }
 
 function closeDeleteModal() {
-    // Ocultar modal cuando el usuario le de en cerrar
-    document.getElementById('deleteModal').style.display = "none";
+    hideModal("deleteModal");
 }
+
+// Cerrar el modal al hacer clic en el fondo negro
+window.addEventListener("click", function (event) {
+    const modals = document.querySelectorAll(".modal.show");
+
+    modals.forEach(modal => {
+        if (event.target === modal) {
+            hideModal(modal.id);
+        }
+    });
+});
