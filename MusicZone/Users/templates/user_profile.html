@@ -84,7 +84,7 @@
                             <tr>
                                 <td class="text-center">{{ order.order_date }}</td>
                                 <td class="text-center">${{ order.sale.total_price }}</td>
-                                <td class="text-center">{{ order.get_status }}</td>
+                                <td class="text-center">{{ order.status }}</td>
                                 <td class="text-center">
                                     <div class="d-flex gap-2">
                                         <button onclick="toggleDetails('details-{{ order.id }}')" class="btn shadow"
