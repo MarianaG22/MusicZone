@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Gestión de Usuarios{% endblock %}
+{% block title %}Gestión de Roles{% endblock %}
 
 {% block content %}
 <!-- Bootstrap JS (necesario para dropdowns) -->
@@ -17,9 +17,8 @@
             <div class="col-12 col-md-6">
             </div>
             <!-- Agregar rol -->
-             <div class="col-12 col-md-6 text-md-end mt-2 mt-md-0">
-                <button onclick="openCreateModal()" class="btn shadow"
-                    style="background-color: #ffaa21; color: white;">Agregar</button>
+            <div class="col-12 col-md-6 text-md-end mt-2 mt-md-0">
+                <button onclick="openCreateModal()" class="btn shadow" style="background-color: #ffaa21; color: white;">Agregar</button>
             </div>
         </div>
 
@@ -38,23 +37,17 @@
                         <td class="text-center">{{ rol.id }}</td>
                         <td>{{ rol.role }}</td>
                         <td>
-                            <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
-                                <!-- Botón para abrir el modal de edición de rol -->
-                                <a href="javascript:void(0);" onclick="openEditModal(this)"
-                                    data-id="{{ rol.id }}" data-name="{{ rol.role }}" class="btn btn-sm"
-                                   style="background-color: #ffaa21; color: white;"> Editar
-                                </a>
-
-                                <!-- Botón para abrir el modal de eliminación de rol -->
-                                <a href="javascript:void(0);" 
-                                onclick="openDeleteModal('{{ rol.id }}', '{{ rol.role }}')"
-                                class="btn btn-sm" style="background-color: rgb(245, 72, 72); color: white;"> Eliminar
-                                </a>
+                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                <a href="javascript:void(0);" onclick="openEditModal(this)" data-id="{{ rol.id }}" data-name="{{ rol.role }}" class="btn btn-sm text-white" style="background-color: #ffaa21;">Editar</a>
+                                <a href="javascript:void(0);" onclick="openDeleteModal('{{ rol.id }}', '{{ rol.role }}')" class="btn btn-sm text-white" style="background-color: rgb(245, 72, 72);">Eliminar</a>
                             </div>
                         </td>
-                    </tr> {% empty %} <tr>
-                        <td colspan="2" class="text-center">No hay roles registrados.</td>
-                    </tr> {% endfor %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center">No hay roles registrados.</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -62,14 +55,14 @@
 </div>
 
 <!-- Modal para agregar rol -->
-<div id="addRoleModal" class="modal">
+<div id="addRoleModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
-        <form id="createForm" method="POST" action="{% url 'users:add_role' %}">
-            {% csrf_token %}
-            <div class="modal-content">
-                <div class="modal-header text-white" style="background-color: #ffb743;">
-                    <h5 class="modal-title" id="addRoleModalLabel">Crear Nuevo Rol</h5>
-                    <span class="close" type="submit" onclick="closeCreateModal()">&times; </span>
+        <div class="modal-content">
+            <form id="createForm" method="POST" action="{% url 'users:add_role' %}">
+                {% csrf_token %}
+                <div class="modal-header" style="background-color: #ffb743;">
+                    <h5 class="modal-title">Crear Nuevo Rol</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
@@ -78,21 +71,22 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn shadow text-white" style="background-color: #f0b04a;">Crear Rol</button>
+                    <button type="submit" class="btn text-white" style="background-color: #f0b04a;">Crear Rol</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
-<!-- Modal para editar rol-->
-<div id="editRoleModal" class="modal">
+
+<!-- Modal para editar rol -->
+<div id="editRoleModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
-        <form id="editForm" method="POST">
-            {% csrf_token %}
-            <div class="modal-content">
-                <div class="modal-header text-white" style="background-color: #ffb743;">
+        <div class="modal-content">
+            <form id="editForm" method="POST">
+                {% csrf_token %}
+                <div class="modal-header" style="background-color: #ffb743;">
                     <h5 class="modal-title">Editar Rol</h5>
-                    <span class="close" type="submit" onclick="closeEditModal()">&times;</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="role_id" id="edit_role_id">
@@ -102,21 +96,22 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn shadow text-white" style="background-color: #f0b04a;">Guardar cambios</button>
+                    <button type="submit" class="btn text-white" style="background-color: #f0b04a;">Guardar cambios</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
+
 <!-- Modal de Confirmar Eliminación -->
-<div id="deleteModal" class="modal">
+<div id="deleteModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
-        <form method="POST" id="deleteForm">
-            {% csrf_token %}
-            <div class="modal-content">
-                <div class="modal-header text-white" style="background-color: rgb(245, 72, 72);">
+        <div class="modal-content">
+            <form method="POST" id="deleteForm">
+                {% csrf_token %}
+                <div class="modal-header" style="background-color: rgb(245, 72, 72);">
                     <h5 class="modal-title">Eliminar Rol</h5>
-                    <span class="close" type="submit" onclick="closeDeleteModal()">&times;</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <p>¿Estás seguro de que deseas eliminar el rol <span id="delete_role_name"></span>?</p>
@@ -124,10 +119,11 @@
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Si, eliminar</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
+
 <script src="{% static 'js/roles.js' %}"></script>
 <link href="{% static 'css/role.css' %}" rel="stylesheet">
 {% endblock %}
