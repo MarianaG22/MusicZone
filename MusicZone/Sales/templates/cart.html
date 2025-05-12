@@ -54,7 +54,7 @@
             {% if cart %}
             <form id="saleForm" action="{% url 'sales:register_sale' %}" method="POST" class="d-flex justify-content-end">
                 {% csrf_token %}
-                <button type="submit" class="btn" style="background-color: rgb(240, 84, 84); color: white;">Realizar pedido</button>
+                <button type="submit" class="btn"  style="background-color: rgb(240, 84, 84); color: white;" data-url="{% url 'sales:cart_view' %}">Realizar pedido</button>
             </form>
             {% endif %}
         </div> 
