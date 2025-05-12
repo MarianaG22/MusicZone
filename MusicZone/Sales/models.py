@@ -23,8 +23,9 @@ class Sale_Detail(models.Model):
 class Order(models.Model):
     class Status(models.TextChoices):
         PENDIENTE = 'pendiente', 'Pendiente'
-        ENVIADA = 'enviada', 'Enviada'
-        ENTREGADA = 'entregada', 'Entregada'
+        ENVIADA = 'enviado', 'Enviado'
+        ENTREGADA = 'entregado', 'Entregado'
+        RECIBIDO = 'recibido', 'Recibido'
 
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE, verbose_name="Venta")
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDIENTE, verbose_name="Estado")
