@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Carrusel Bootstrap 5 -->
+<div id="musicCarousel" class="carousel slide" data-bs-ride="carousel" style="margin-bottom: 30px;">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'img/banner5.jpg' %}" class="d-block w-100" alt="Slide 1"
+                style="max-height: 500px; object-fit: cover; transition: transform 0.5s ease-in-out;">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/banner4.jpg' %}" class="d-block w-100" alt="Slide 2"
+                style="max-height: 500px; object-fit: cover; transition: transform 0.5s ease-in-out;">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/banner3.jpg' %}" class="d-block w-100" alt="Slide 3"
+                style="max-height: 500px; object-fit: cover; transition: transform 0.5s ease-in-out;">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#musicCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#musicCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<section class="container py-5 text-center" style="background-color: beige; border-radius: 10px; padding-top: 30px;">
+    <div class="container">
+        <h1 style="color: rgb(245, 72, 72); font-family: 'Raleway', sans-serif; font-size: 4rem; text-shadow: 2px 2px 5px rgba(240, 134, 134, 0.3);">
+            Tu mundo musical a un solo clic
+        </h1>
+        <h4 style="font-family: 'Raleway', sans-serif; color: #634242;">Descubre una tienda online donde la pasión por la música cobra vida</h4>
+        <a href="{% url 'products:catalog' %}" class="btn btn-lg" style="background-color:#ffaa21; color: white; border-radius: 50px; padding: 15px 40px; font-size: 1.2rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: all 0.3s ease;">
+            Catálogo
+        </a>
+    </div>
+</section>
+{% endblock %}
