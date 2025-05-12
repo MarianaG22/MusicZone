@@ -72,15 +72,16 @@
                 <p class="mt-2 fw-bold">Hola, {{ user.name }}!</p>
             </div>
             <ul class="nav flex-column px-2">
-                {% if user.is_staff %}
+                {% if user.is_authenticated %}
                 <li class="nav-item mb-2">
                     <a href="{% url 'users:user_profile' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Perfil de Usuario</a>
                 </li>
-                <li class="nav-item mb-2">
-                    <a href="{% url 'products:instrumento' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Productos</a>
-                </li>
+                {% if user.is_staff %}
                 <li class="nav-item mb-2">
                     <a href="{% url 'sales:order_list' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Ordenes</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="{% url 'products:instrumento' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Productos</a>
                 </li>
                 <li class="nav-item mb-2">
                     <a href="{% url 'users:user' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Usuarios</a>
@@ -88,6 +89,7 @@
                 <li class="nav-item mb-2">
                     <a href="{% url 'users:role' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Roles</a>
                 </li>
+                {% endif %}
                 {% endif %}
             </ul>
         </div>
@@ -104,15 +106,16 @@
                     <p class="fw-bold">Hola, {{ user.name }}!</p>
                 </div>
                 <ul class="nav flex-column">
-                    {% if user.is_staff %}
+                    {% if user.is_authenticated %}
                     <li class="nav-item mb-2">
                         <a href="{% url 'users:user_profile' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Perfil de Usuario</a>
                     </li>
-                    <li class="nav-item mb-2">
-                        <a href="{% url 'products:instrumento' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Productos</a>
-                    </li>
+                    {% if user.is_staff %}
                     <li class="nav-item mb-2">
                         <a href="{% url 'sales:order_list' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Ordenes</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="{% url 'products:instrumento' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Productos</a>
                     </li>
                     <li class="nav-item mb-2">
                         <a href="{% url 'users:user' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Usuarios</a>
@@ -120,6 +123,7 @@
                     <li class="nav-item mb-2">
                     <a href="{% url 'users:role' %}" class="btn w-100" style="background-color: #3a2125; color: white;">Roles</a>
                     </li>
+                    {% endif %}
                     {% endif %}
                 </ul>
             </div>
