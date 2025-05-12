@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Instrument, Type, Mark
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 def catalog(request):
 
@@ -51,6 +53,8 @@ def catalog(request):
     })
 
 ##############################CRUD PRODUCTOS###############################################
+@staff_member_required(login_url='/')
+@login_required
 def instrumento(request):
     # Obtener todos los instrumentos
     instruments_list = Instrument.objects.all()
@@ -68,6 +72,8 @@ def instrumento(request):
         'marks': marks,
     })
 
+@staff_member_required(login_url='/')
+@login_required
 def crear_instrumento(request):
     types = Type.objects.all()
     marks = Mark.objects.all()
@@ -113,6 +119,8 @@ def crear_instrumento(request):
 
     return render(request, 'CRUD Product/create_instrument.html', {'types': types, 'marks': marks})
 
+@staff_member_required(login_url='/')
+@login_required
 def editar_instrumento(request, instrument_id):
     instrument = get_object_or_404(Instrument, id=instrument_id)
     types = Type.objects.all()
@@ -151,6 +159,8 @@ def editar_instrumento(request, instrument_id):
 
     return render(request, 'CRUD Product/edit_instrument.html', context)
 
+@staff_member_required(login_url='/')
+@login_required
 def eliminar_instrumento(request, instrument_id):
     instrument = get_object_or_404(Instrument, id=instrument_id)
     

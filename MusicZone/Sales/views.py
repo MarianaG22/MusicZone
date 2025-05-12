@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from .models import Cart, Cart_Item, Sale, Sale_Detail, Order
 from Inventory.models import Instrument
 from Users.models import User
@@ -8,7 +9,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 from datetime import date
 
-#@login_required
+@login_required
 def cart_view(request):
     cart, created = Cart.objects.get_or_create(user=request.user, defaults={'created_at': date.today()})
     items = cart.cart_item_set.all()
@@ -21,7 +22,7 @@ def cart_view(request):
     return render(request, 'cart.html', {'cart': cart, 'items': items, 'total_price': total_price})
 
 # Agregar un producto al carrito
-#@login_required
+@login_required
 def add_to_cart(request, instrument_id):
     instrument = get_object_or_404(Instrument, id=instrument_id)
     cart, created = Cart.objects.get_or_create(user=request.user, defaults={'created_at': date.today()})
@@ -38,7 +39,7 @@ def add_to_cart(request, instrument_id):
     return redirect('products:catalog')
 
 # Incrementar la cantidad de un producto en el carrito
-#@login_required
+@login_required
 def increase_quantity(request, item_id):
     item = get_object_or_404(Cart_Item, id=item_id)
     if item.cart.user == request.user:
@@ -48,7 +49,7 @@ def increase_quantity(request, item_id):
     return redirect('sales:cart_view')
 
 # Disminuir la cantidad de un producto en el carrito
-#@login_required
+@login_required
 def decrease_quantity(request, item_id):
     item = get_object_or_404(Cart_Item, id=item_id)
     if item.cart.user == request.user:
@@ -61,7 +62,7 @@ def decrease_quantity(request, item_id):
     return redirect('sales:cart_view')
 
 # Eliminar un producto del carrito
-#@login_required
+@login_required
 def remove_from_cart(request, item_id):
     item = get_object_or_404(Cart_Item, id=item_id)
     if item.cart.user == request.user:
@@ -127,6 +128,8 @@ def order_list(request):
 
     return render(request, 'order_list.html', {'orders': orders})
 
+@staff_member_required(login_url='/')
+@login_required
 def toggle_order_status(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     if request.user.is_staff and request.method == "POST":
