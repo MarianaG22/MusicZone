@@ -14,3 +14,22 @@
 .modal.show {
     display: flex;
 }
+
+.modal-dialog {
+    max-width: 500px; /* Tamaño deseado */
+    width: 100%;
+}
+
+.modal-content .close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+}
+
+.modal-content .close:hover {
+    color: #585858;
+}
