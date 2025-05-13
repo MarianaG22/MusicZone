@@ -6,7 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 def catalog(request):
-
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('home')
     # Capturar filtros del formulario
     type_param = request.GET.get('type')
     selected_type = int(type_param) if type_param and type_param.isdigit() else None

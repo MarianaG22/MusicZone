@@ -138,10 +138,11 @@ def user_profile(request, usuario_id):
 @login_required
 def mark_as_received(request, order_id):
     order = get_object_or_404(Order, id=order_id, sale__user=request.user)
+    usuario = request.user
     if order.status != Order.Status.RECIBIDO:
         order.status = Order.Status.RECIBIDO
         order.save()
         messages.success(request, 'El pedido ha sido marcado como recibido.')
     else:
         messages.info(request, 'El pedido ya estaba marcado como recibido.')
-    return redirect('users:user_profile')
+    return redirect('users:user_profile', usuario_id=usuario.id)

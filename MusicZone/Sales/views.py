@@ -11,6 +11,9 @@ from datetime import date
 
 @login_required
 def cart_view(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('home')
     cart, created = Cart.objects.get_or_create(user=request.user, defaults={'created_at': date.today()})
     items = cart.cart_item_set.all()
     # Agregar subtotales a cada ítem
@@ -24,6 +27,10 @@ def cart_view(request):
 # Agregar un producto al carrito
 @login_required
 def add_to_cart(request, instrument_id):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('home')
+
     instrument = get_object_or_404(Instrument, id=instrument_id)
     cart, created = Cart.objects.get_or_create(user=request.user, defaults={'created_at': date.today()})
 
@@ -41,6 +48,10 @@ def add_to_cart(request, instrument_id):
 # Incrementar la cantidad de un producto en el carrito
 @login_required
 def increase_quantity(request, item_id):
+    if request.user.is_authenticated:
+            if request.user.is_staff:
+                return redirect('home')
+
     item = get_object_or_404(Cart_Item, id=item_id)
     if item.cart.user == request.user:
         item.quantity += 1
@@ -51,6 +62,10 @@ def increase_quantity(request, item_id):
 # Disminuir la cantidad de un producto en el carrito
 @login_required
 def decrease_quantity(request, item_id):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('home')
+
     item = get_object_or_404(Cart_Item, id=item_id)
     if item.cart.user == request.user:
         if item.quantity > 1:
@@ -64,6 +79,10 @@ def decrease_quantity(request, item_id):
 # Eliminar un producto del carrito
 @login_required
 def remove_from_cart(request, item_id):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('home')
+
     item = get_object_or_404(Cart_Item, id=item_id)
     if item.cart.user == request.user:
         item.delete()
@@ -72,6 +91,10 @@ def remove_from_cart(request, item_id):
 # Realizar pedido
 @login_required
 def register_sale(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('home')
+
     if request.method == "POST":
         cart = Cart.objects.filter(user=request.user).first()  
         if not cart or not Cart_Item.objects.filter(cart=cart).exists():
