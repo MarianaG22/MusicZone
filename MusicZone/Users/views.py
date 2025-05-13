@@ -119,9 +119,20 @@ def delete_role(request, role_id):
     return redirect('users:role')
 
 @login_required
-def user_profile(request):
+def user_profile(request, usuario_id):
+    usuario = get_object_or_404(User, pk=usuario_id)
     orders = Order.objects.filter(sale__user=request.user).select_related('sale').prefetch_related('sale__sale_detail_set')
-    print(orders)
+    if request.method == 'POST':
+        usuario.username = request.POST.get('username')
+        usuario.email = request.POST.get('email')
+        usuario.name = request.POST.get('name')
+        usuario.last_name = request.POST.get('last_name')
+
+        if request.POST.get('password'):
+            usuario.set_password(request.POST.get('password'))
+
+        usuario.save()
+        return redirect('users:user_profile', usuario_id=usuario.id)
     return render(request, 'user_profile.html', {'orders': orders})
 
 @login_required

@@ -13,6 +13,6 @@ urlpatterns = [
    path('roles_add/', views.add_role, name='add_role'),
    path('roles_edit/<int:role_id>/', views.edit_role, name='edit_role'),
    path('roles_delete/<int:role_id>/', views.delete_role, name='delete_role'),
-   path('perfil/', views.user_profile, name='user_profile'),
+   path('perfil/<int:usuario_id>', views.user_profile, name='user_profile'),
    path('marcar-recibido/<int:order_id>/', views.mark_as_received, name='mark_as_received'),
 ]

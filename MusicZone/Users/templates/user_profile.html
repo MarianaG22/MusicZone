@@ -23,7 +23,7 @@
                 <h2 class="fw-bold text-center" style="color: #634242;">Datos Personales</h2>
                 <hr class="border-1 opacity-75 mt-1 mb-3" style="color: rgb(230, 120, 120);">
 
-                <form method="POST" action="{% url 'users:edit_user' request.user.id %}">
+                <form method="POST" action="{% url 'users:user_profile' request.user.id %}">
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="username" class="form-label"><strong>Nombre de usuario:</strong></label>
